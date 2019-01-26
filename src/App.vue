@@ -1,9 +1,7 @@
 <template>
   <div id="app" >
     <Nav />
-    <!-- <Campaign /> -->
     <div class="container">
-      
       <HelloWorld msg="Welcome to Your Vue.js App"/>
     </div>
   </div>
@@ -11,15 +9,12 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue';
-
 import Nav from './components/Nav.vue';
-// import Campaign from './components/Campaign.vue';
 
 export default {
   name: 'app',
   components: {
     HelloWorld,
-    // Campaign,
     Nav
   }
 }
@@ -31,8 +26,14 @@ export default {
 @import './styles/vendors/slick.min.css';
 @import './styles/vendors/fontawesome.css';
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Noto Serif SC', serif;
+  font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin:0;
+}
+ul, li {
+  margin:0;
+  padding:0;
 }
 </style>
