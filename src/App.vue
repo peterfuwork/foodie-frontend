@@ -1,21 +1,34 @@
 <template>
   <div id="app" >
     <Nav />
+    <Campaign />
     <div class="container">
-      <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <HelloWorld msg="Welcome to Foodie"/>
     </div>
+    <Footer />
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue';
 import Nav from './components/Nav.vue';
+import Campaign from './components/Campaign.vue';
+import Footer from './components/Footer.vue';
+
+import { mapActions } from 'vuex';
 
 export default {
-  name: 'app',
+
+  name: 'App',
   components: {
     HelloWorld,
-    Nav
+    Nav,
+    Campaign,
+    Footer
+  },
+  methods: mapActions(['fetchYelpRestaurants']),
+  async created() {
+    await this.fetchYelpRestaurants();
   }
 }
 </script>
