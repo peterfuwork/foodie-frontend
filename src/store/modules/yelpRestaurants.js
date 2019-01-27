@@ -1,4 +1,5 @@
 import api from '../../api/yelp';
+import { printResult } from '../../services/PrintRating';
 
 const state = {
     yelpRestaurants: [],
@@ -9,8 +10,13 @@ const getters = {
 };
 
 const actions = {
-    fetchYelpRestaurants(lat, long) {
-        api.fetchYelpRestaurants(lat, long);
+    async fetchYelpRestaurants({ commit }) {
+        const response = await api.fetchYelpRestaurants();
+        const data = response.data.map(restaurant => {
+            restaurant.htmlRating = printResult(restaurant.rating);
+            return restaurant;
+        });
+        commit('setYelpRestaurants', data);
     }
 };
 

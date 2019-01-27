@@ -3,8 +3,8 @@
         <div class="lists">
             <a class="logo-wrapper" href="#"><img class="logo" src="https://dl.dropboxusercontent.com/s/42hawgg84mqxuy3/donut.png" /></a>
             <a href="#">Top Rating Food</a>
-            <a href="#">nav2</a>
-            <a href="#">nav3</a>
+            <a href="#">Restaurants</a>
+            <a href="#">Food Blog</a>
         </div>
     </nav>
 </template>
@@ -46,6 +46,7 @@
                     max-width:2rem;
                 }
                 &:hover {
+                    background-color: transparent;
                     border-bottom: none;
                 }
             }
@@ -64,6 +65,7 @@
                 opacity:1;
                 box-shadow: none;
                 position:fixed;
+                background-color: $primary-color;
             }
             a {
                 color: #fff;
@@ -77,7 +79,7 @@
                 &:hover {
                     text-shadow: none;
                     opacity:1;
-                    border-bottom: 3px solid #fff;
+                    background-color: $secondary-color;
                 }
             }
         }

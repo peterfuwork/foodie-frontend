@@ -24,6 +24,7 @@ export default {
             lon
         })
         console.log(data);
+        return data;
     }
 
 }
