@@ -1,31 +1,21 @@
 <template>
   <div id="app" >
     <Nav />
-    <Campaign />
-    <section class="container-fluid">
-      <div class="row">
-        <FoodNearMe class="col-sm-8 col-xs-12" />
-        <RestaurantsColumn class="col-sm-4 col-xs-12" />
-      </div>
-    </section>
+      <router-view></router-view>
     <Footer />
   </div>
 </template>
 
 <script>
   import Nav from './components/Nav.vue';
-  import Campaign from './components/Campaign.vue';
-  import FoodNearMe from './components/FoodNearMe';
-  import RestaurantsColumn from './components/RestaurantsColumn';
+  import Category from './Category.vue'
   import Footer from './components/Footer.vue';
 
   export default {
     name: 'App',
     components: {
       Nav,
-      Campaign,
-      FoodNearMe,
-      RestaurantsColumn,
+      Category,
       Footer
     }
   }

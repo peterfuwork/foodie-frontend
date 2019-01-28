@@ -2,11 +2,13 @@ import axios from "axios";
 import { printResult } from '../../services/PrintRating';
 
 const state = {
-    foods: []
+    foods: [],
+    food: []
 };
 
 const getters = {
-    allFoods: state => state.foods
+    allFoods: state => state.foods,
+    food: state => state.food
 };
 
 const actions = {
@@ -14,23 +16,39 @@ const actions = {
         const response = await axios.get('http://localhost:4000/api/foods');
         const data = response.data.map((food) => {
             let foodRating = 0; 
-            food.comments.map((comment) => {
-                comment.comment_htmlRating = printResult(comment.comment_rating);
-                return comment;
-            });
-            food.comments.map(comment => {
-                return foodRating += Number(comment.comment_rating);
-            })
-            food.totalRating = Number(foodRating);
-            return food;
+            if(food.comments.length === 0) {
+                return food;
+            } else {
+                food.comments.map((comment) => {
+                    comment.comment_htmlRating = printResult(comment.comment_rating);
+                    return comment;
+                });
+                food.comments.map(comment => {
+                    return foodRating += Number(comment.comment_rating);
+                })
+                food.totalRating = Number(foodRating);
+                return food;
+            }
         });
+        console.log(data);
         commit('setFoods', data);
+    },
+    async filterFoodById({ commit }, id) {
+        const response = await axios.get(`http://localhost:4000/api/foods/${id}`)
+        .then((data) => {
+            return data;
+        });
+        const data = response.data[0];
+        commit('setFood', data);
     }
 };
 
 const mutations = {
     setFoods: (state, foods) => {
         state.foods = foods;
+    },
+    setFood: (state, food) => {
+        state.food = food;
     }
 };
 

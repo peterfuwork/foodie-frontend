@@ -1,6 +1,6 @@
 <template>
-    <section class="restaurants-column">
-        <div class="row restaurant" v-for="yelpRestaurant in allYelpRestaurants">
+    <section v-if="allYelpRestaurants !== undefined" class="restaurants-column">
+        <div class="row restaurant"  v-for="yelpRestaurant in allYelpRestaurants">
             <div class="col-xs-12 no-padding">
                 <div class="restaurant-info">
                     <div class="restaurant-image-wrapper">
@@ -23,6 +23,9 @@
                 </div>
             </div>
         </div>
+    </section>
+    <section class="restaurants-column" v-else="allYelpRestaurants === undefined">
+        <img src="../styles/vendors/ajax-loader.gif" />
     </section>
 </template>
 <script>

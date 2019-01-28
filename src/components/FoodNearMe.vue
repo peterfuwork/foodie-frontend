@@ -1,5 +1,5 @@
 <template>
-    <section class="food-near-me">
+    <section v-if="allFoods !== undefined" class="food-near-me">
         <div class="row food" v-for="food in allFoods">
             <div class="col-sm-4 col-xs-12">
                 <div class="food-image-wrapper">
@@ -16,8 +16,13 @@
                             <div class="price text"> 
                                 ${{ food.price }}
                             </div>
+                            <div class="text restaurant-info">
+                                <div class="title">{{ food.restaurants[0].restaurant_name }}</div>
+                                <div class="address">{{ food.restaurants[0].address }}</div>
+                                <div class="address">{{ food.restaurants[0].phone }}</div>
+                            </div>
                             <div class="comment-boxes">
-                                <div class="user">
+                                <div class="user" v-if="food.comments.length !== 0">
                                     <div class="image-name">
                                         <img class="image" :src="food.comments[0].user.user_image" />
                                         <div class="firstname">{{ food.comments[0].user.first_name }}</div>
@@ -28,17 +33,19 @@
                                         <div class="message">{{ food.comments[0].message }}</div>
                                     </div>
                                 </div>
-                               
+                                <div class="user" v-else="food.comments.length === 0">
+                                    No review yet!
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="total-info">
                                 <div class="total-rating">
-                                    <div class="rate">{{ food.totalRating/food.comments.length }}</div>
-                                    <div class="number-of-rating">( {{ food.comments.length }} people rated )</div>
+                                    <div class="rate" v-if="food.comments.length !== 0">{{ (food.totalRating/food.comments.length).toFixed(2) }}</div>
+                                    <div class="number-of-rating">( {{ food.comments.length}} people rated )</div>
                                 </div>
                                 <div class="links">
-                                    <a href="#" class="btn">Reviews</a>
+                                    <router-link :to="{name: 'food', params: {foodId: food._id}}" :data-foodId="food._id" class="btn">Reviews</router-link>
                                 </div>
                             </div>
                         </div>
@@ -46,6 +53,9 @@
                 </div>
             </div>
         </div>
+    </section>
+    <section class="food-near-me" v-else="allFoods === undefined">
+        <img src="../styles/vendors/ajax-loader.gif" />
     </section>
 </template>
 <script>
@@ -145,9 +155,21 @@ import { mapActions, mapGetters } from 'vuex';
                                 font-style: normal;
                                 font-family: 'Montserrat', sans-serif;
                             }
+                            &.restaurant-info {
+                                padding:1rem 0;
+                                .title {
+                                    font-size:1.2rem;
+                                }
+                                .address {
+                                    font-size:.8rem;
+                                }
+                            }
                         }
                     .total-info {
                         min-height: 13rem;
+                        @media(max-width:767px) {
+                            min-height: auto;
+                        }
                         .total-rating {
                             text-align:center;
                             .rate {
@@ -166,6 +188,9 @@ import { mapActions, mapGetters } from 'vuex';
                             bottom: 0;
                             left: 0;
                             right: 0;
+                            @media(max-width:767px) {
+                                position: relative;
+                            }
                             .btn {
                                 padding: .2rem .5rem;
                             }
