@@ -1,13 +1,11 @@
 <template>
     <section class="restaurants-column">
         <div class="row restaurant" v-for="yelpRestaurant in allYelpRestaurants">
-            <div class="col-sm-6 col-xs-12 no-padding">
-                <div class="restaurant-image-wrapper">
-                    <img class="restaurant-image" :src="yelpRestaurant.image_url" />
-                </div>
-            </div>
-            <div class="col-sm-6 col-xs-12 no-padding">
+            <div class="col-xs-12 no-padding">
                 <div class="restaurant-info">
+                    <div class="restaurant-image-wrapper">
+                        <img class="restaurant-image" :src="yelpRestaurant.image_url" />
+                    </div>
                     <div class="info">
                         <div class="text rating">
                             <div class="rating-number">{{ yelpRestaurant.rating }}</div>
@@ -51,7 +49,7 @@
             border-left: 1px solid #000;
             .restaurant-image-wrapper {
                 padding:1rem 0;
-                margin-left: 1rem;
+                margin: 0 1rem;
                 .restaurant-image {
                     max-width:100%;
                 }
@@ -72,6 +70,7 @@
                             font-family: 'Noto Serif SC', serif;
                             .rating-number {
                                 font-size:1.7rem;
+                                line-height: 1.2;
                             }
                             .rating-html {
                                 font-size: .8rem;
