@@ -1,11 +1,12 @@
 <template>
-    <section class="restaurants-column">
-        <div class="text-center" v-if="allYelpRestaurants.length === 0">
-            <img src="../styles/vendors/ajax-loader.gif" />
-        </div>
-        <div class="row restaurant" v-else="allYelpRestaurants.length > 0"  v-for="yelpRestaurant in allYelpRestaurants">
-            <div class="col-xs-12 no-padding">
-                <div class="restaurant-info">
+    <section class="restaurants container-fluid">
+        <h2>Top restaurants near me</h2>
+        <div class="restaurant">
+            <div class="row no-padding" >
+                <div class="text-center" v-if="allYelpRestaurants.length === 0">
+                  <img src="./styles/vendors/ajax-loader.gif" />
+                </div>
+                <div class="col-sm-4 restaurant-info" v-else="allYelpRestaurants.length > 0" v-for="yelpRestaurant in allYelpRestaurants">
                     <div class="restaurant-image-wrapper">
                         <img class="restaurant-image" :src="yelpRestaurant.image_url" />
                     </div>
@@ -24,32 +25,32 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </section>
 </template>
-<script>
-    import { mapActions, mapGetters } from 'vuex';
 
-    export default {
-        name: 'RestaurantsColumn',
-        computed: mapGetters(['allYelpRestaurants']),
-        methods: mapActions(['fetchYelpRestaurants']),
-        async created() {
-            await this.fetchYelpRestaurants();
-        }
+<script>
+  import { mapActions, mapGetters } from 'vuex';
+  import RestaurantsColumn from './components/RestaurantsColumn';
+
+  export default {
+    name: 'Restaurants',
+    components: {
+      RestaurantsColumn
+    },
+    computed: mapGetters(['allYelpRestaurants']),
+    methods: mapActions(['fetchYelpRestaurants']),
+    async created() {
+        await this.fetchYelpRestaurants();
     }
+  }
 </script>
+
 <style lang="scss">
-    .restaurants-column {
-        .restaurant {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 1rem;
-            border-top: 1px solid #000;
-            border-right: 1px solid #000;
-            border-left: 1px solid #000;
+      .restaurants {
+            padding-top:5rem;
             .restaurant-image-wrapper {
                 padding:1rem 0;
                 margin: 0 1rem;
@@ -59,6 +60,9 @@
             }
             .restaurant-info {
                 line-height: 1.7;
+                &:nth-child(3n+1) {
+                  clear:left;
+                }
                 .info {
                     text-align:center;
                     margin: .3rem;
@@ -105,10 +109,5 @@
             &:first-child {
                 margin-top:3rem;
             }
-            &:last-child {
-                border-bottom: 1px solid #000;
-                margin-bottom:3rem;
-            }
         }
-    }
 </style>

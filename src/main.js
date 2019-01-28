@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import App from './App.vue';
 import Category from './Category.vue';
 import Food from './Food.vue';
+import Restaurants from './Restaurants.vue';
 import store from './store';
 
 Vue.use(VueRouter);
@@ -16,6 +17,15 @@ const router = new VueRouter({
       path: '/',
       name: 'category',
       component: Category, 
+      props: (route) => (
+        console.log(route),
+        {...route.params}
+      )
+    },
+    { 
+      path: '/restaurants',
+      name: 'restaurants',
+      component: Restaurants, 
       props: (route) => (
         console.log(route),
         {...route.params}

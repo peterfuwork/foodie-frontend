@@ -2,7 +2,6 @@
   <div id="app" >
     <Nav />
       <router-view></router-view>
-    <Footer />
   </div>
 </template>
 
@@ -51,4 +50,10 @@
   .no-padding {
     padding:0;
   }
+  .text-center{
+    text-align:center;
+    margin: 1rem 0;
+  }
+
+  [v-cloak] { display: none; }
 </style>

@@ -2,8 +2,8 @@
     <nav class="nav">
         <div class="lists">
             <a class="logo-wrapper" href="#"><img class="logo" src="https://dl.dropboxusercontent.com/s/42hawgg84mqxuy3/donut.png" /></a>
-            <a href="/">Top Rating Food</a>
-            <a href="#">Restaurants</a>
+            <router-link to="/">Top Rating Food</router-link>
+            <router-link to="/restaurants">Restaurants</router-link>
             <a href="#">Food Blog</a>
         </div>
     </nav>

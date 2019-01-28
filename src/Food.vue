@@ -1,5 +1,8 @@
 <template>
-    <section v-if="food !== undefined" class="food-single container-fluid">
+    <section v-if="food === undefined" class="food-single container-fluid">
+        Error
+    </section>
+    <section v-else="food !== undefined" class="food-single container-fluid">
         <div class="row food">
             <div class="col-sm-6 col-xs-12">
                 <div class="food-info">
@@ -19,6 +22,12 @@
             </div>
             <div class="col-sm-6 col-xs-12">
                 <div class="food-image-wrapper">
+                    <div class="totalRating" v-if="food.comments && food.comments.length > 0">
+                        <span class="fa fa-star"></span>{{ Number(food.totalRating) / food.comments.length }}
+                    </div>
+                    <div class="rating" v-else="food.comments.length === 0">
+                        No rating yet!
+                    </div>
                     <img class="food-image" :src="food.food_image" />
                 </div>
             </div>
@@ -44,9 +53,7 @@
             </div>
         </div>
     </section>
-    <section v-else="food === undefined" class="food-single container-fluid">
-        Loading...
-    </section>
+    
 </template>
 
 <script>
@@ -67,11 +74,31 @@
     }
 </script>
 <style lang="scss">
+$primary-color: #FCCB6F;
     .food-single {
         padding-top: 5rem;
         .food-image-wrapper {
-            text-align: center;
+            width: 100%;
+            text-align: right;
             padding:1rem 0;
+            position:relative;
+            display: inline-block;
+            @media(max-width:767px) {
+                display: block;
+                margin: 0 auto;
+                max-width: 300px;
+            }
+            .totalRating {
+                color:#000;
+                background-color: $primary-color;
+                position: absolute;
+                top:0;
+                right:0;
+                margin:1rem 0;
+                padding:.5rem;
+                font-family: 'Noto Serif SC', serif;
+                font-size: 1.8rem;
+            }
             .food-image {
                 max-width: 300px;
                 width: 100%;
@@ -100,7 +127,7 @@
                                 font-size: 2rem;
                             }
                             &.address {
-                                font-size:1.3rem;
+                                font-size:1.2rem;
                             }
                         }
                     
@@ -137,8 +164,8 @@
                             }
                             .rating {
                                 position: absolute;
-                                right: 0;
-                                top: 0;
+                                right: .5%;
+                                top: 4%;
                             }
                             .comments{
                                 width: 100%;

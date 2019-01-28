@@ -1,6 +1,9 @@
 <template>
-    <section v-if="allFoods !== undefined" class="food-near-me">
-        <div class="row food" v-for="food in allFoods">
+    <section class="food-near-me">
+        <div class="text-center" v-if="allFoods.length === 0">
+            <img src="../styles/vendors/ajax-loader.gif" />
+        </div>
+        <div class="row food" v-else="allFoods.length > 0" v-for="food in allFoods">
             <div class="col-sm-4 col-xs-12">
                 <div class="food-image-wrapper">
                     <img class="food-image" :src="food.food_image" />
@@ -45,7 +48,7 @@
                                     <div class="number-of-rating">( {{ food.comments.length}} people rated )</div>
                                 </div>
                                 <div class="links">
-                                    <router-link :to="{name: 'food', params: {foodId: food._id}}" :data-foodId="food._id" class="btn">Reviews</router-link>
+                                    <router-link :to="{name: 'food', params: {foodId: food._id}}" class="btn">Reviews</router-link>
                                 </div>
                             </div>
                         </div>
@@ -53,9 +56,6 @@
                 </div>
             </div>
         </div>
-    </section>
-    <section class="food-near-me" v-else="allFoods === undefined">
-        <img src="../styles/vendors/ajax-loader.gif" />
     </section>
 </template>
 <script>
