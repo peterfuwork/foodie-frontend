@@ -7,7 +7,7 @@ const state = {
 };
 
 const getters = {
-    allFoods: state => state.foods,
+    foods: state => state.foods,
     food: state => state.food
 };
 
@@ -53,7 +53,7 @@ const actions = {
             }
         });
         commit('setFood', data[0]);
-    }
+    },
 };
 
 const mutations = {

@@ -2,6 +2,7 @@
   <div id="app" >
     <Nav />
       <router-view></router-view>
+    <Footer />
   </div>
 </template>
 
@@ -54,6 +55,4 @@
     text-align:center;
     margin: 1rem 0;
   }
-
-  [v-cloak] { display: none; }
 </style>

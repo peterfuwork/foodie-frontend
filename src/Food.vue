@@ -23,7 +23,7 @@
             <div class="col-sm-6 col-xs-12">
                 <div class="food-image-wrapper">
                     <div class="totalRating" v-if="food.comments && food.comments.length > 0">
-                        <span class="fa fa-star"></span>{{ Number(food.totalRating) / food.comments.length }}
+                        <span class="fa fa-star"></span>{{ (Number(food.totalRating) / food.comments.length).toFixed(2) }}
                     </div>
                     <div class="rating" v-else="food.comments.length === 0">
                         No rating yet!
@@ -32,9 +32,12 @@
                 </div>
             </div>
             <div class="col-xs-12">
-                <div  class="food-reviews">
+                <div class="food-reviews">
                     <div class="comment-boxes">
                         <div class="user" v-for="comment in food.comments" v-if="food.comments.length !== 0">
+                            <div class="delete-btn-wrapper">
+                                <a @click="onClickDelete($event)" :data-foodId="food._id" :data-commentId="comment._id" class="delete-btn" href="#">Delete</a>
+                            </div>
                             <div class="image-name">
                                 <img class="image" :src="comment.user.user_image" />
                                 <div class="firstname">{{ comment.user.first_name }}</div>
@@ -51,9 +54,53 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xs-12 message-form">
+                <vue-form class="leave-message-form" :state="formstate" @submit.prevent="onSubmitMessageForm(model)">
+                    
+                    <validate class="form-group required-field" :class="fieldClassName(formstate.title)">
+                        <input placeholder="title" type="text" name="title" class="new-comment form-control" required v-model.lazy="model.title">
+                        <field-messages name="title" show="$touched || $submitted" class="form-control-feedback">
+                        <div>Success!</div>
+                        <div slot="required">Title is a required field</div>
+                        </field-messages>
+                    </validate>
+
+                    <validate class="form-group required-field" :class="fieldClassName(formstate.message)">
+                        <textarea rows="3" cols="25" placeholder="message" name="message" class="new-comment form-control" maxlength="50" v-model.lazy="model.message"></textarea>
+                        <small class="form-text text-muted">Enter no more than 50 characters.</small>
+                        <field-messages name="message" show="$touched || $submitted" class="form-control-feedback">
+                        <div>Success!</div>
+                        <div slot="maxlength">Message must be less than 50 characters</div>
+                        </field-messages>
+                    </validate>
+
+                    <validate class="form-group required-field" :class="fieldClassName(formstate.rating)">
+                        <legend class="rating-select-title">Rating:</legend>
+                        <select class="rating-select" name="rating" required v-model.lazy="model.rating">
+                            <option :value="null">Choose...</option>
+                            <option value="5">5</option>
+                            <option value="4.5">4.5</option>
+                            <option value="4">4</option>
+                            <option value="3.5">3.5</option>
+                            <option value="3">3</option>
+                            <option value="2.5">2.5</option>
+                            <option value="2">2</option>
+                            <option value="1.5">1.5</option>
+                            <option value="1">1</option>
+                            <option value="0.5">0.5</option>
+                            <option value="0">0</option>
+                        </select>
+                        <field-messages name="rating" show="$touched || $dirty || $submitted" class="form-control-feedback">
+                            <div>Success!</div>
+                            <div slot="required">Rating is a required field</div>
+                        </field-messages>
+                    </validate>
+                    <button class="submit">Submit</button>
+                </vue-form>
+                <!-- <pre>{{formstate}}</pre> -->
+            </div>
         </div>
     </section>
-    
 </template>
 
 <script>
@@ -61,15 +108,22 @@
     export default {
         data() {
             return {
+                formstate: {},
+                model: {
+                    title: '',
+                    message: '',
+                    rating: Number,
+                    foodId: this.$route.params.foodId,
+                    userId: '5c4f387b9949cd0284a17621'
+                }, 
                 id: this.$route.params.foodId
             }
         },
-        computed: mapGetters(['food']),
-        methods:  mapActions(['filterFoodById']),
+        computed: mapGetters(['food','foods']),
+        methods:  mapActions(['filterFoodById','onSubmitMessageForm','fieldClassName', 'onClickDelete']),
         name: 'Food',
         async created() {
             await this.filterFoodById(this.id);
-            console.log(this.food);
         }
     }
 </script>
@@ -135,7 +189,6 @@ $primary-color: #FCCB6F;
             }
             .food-reviews {
                 .comment-boxes{
-                        padding: .5rem;
                         .user {
                             padding: 1rem;
                             position: relative;
@@ -145,6 +198,12 @@ $primary-color: #FCCB6F;
                             border-top: 1px solid #000;
                             border-left: 1px solid #000;
                             border-right: 1px solid #000;
+                            .delete-btn-wrapper {
+                                width:100%;
+                                .delete-btn {
+
+                                }
+                            }
                             .image-name {
                                 display: block;
                                 width: 100%;
@@ -181,5 +240,71 @@ $primary-color: #FCCB6F;
                         }
                     }
             }
+        .message-form {
+            .leave-message-form {
+                    text-align: right;
+                    border: 1px solid #ccc;
+                    max-width: 500px;
+                    padding: 1rem;
+                    background-color: #efefef;
+                    margin: 1rem 0 1rem auto;
+                .new-comment {
+                    color: #000;
+                    text-decoration: none;
+                    display: block;
+                    padding: .5rem;
+                    width: 100%;
+                    border:none;
+                    border:1px solid #ccc;
+                    line-height: 1.3;
+                    font-size: .8rem;
+                    margin: .8rem 0 .3rem;
+                }
+                .rating-select-title {
+                    font-size: .9rem;
+                    text-align: left;
+                    margin: .5rem 0;
+                    display: block;
+                }
+                .rating-select {
+                    background-color: #fff;
+                    width: 100%;
+                    border: 0;
+                    border-bottom: 1px solid #ccc;
+                    color: #666666;
+                    -webkit-appearance: none;
+                    -webkit-border-radius: 0px;
+                    font-size: .8rem;
+                    padding: .5rem .2rem;
+                    option {
+                        padding: .8rem .5rem;
+                    }
+                }
+                .submit {
+                    border: 1px solid #000;
+                    padding: .5rem .8rem;
+                    font-size: .8rem;
+                    margin: .8rem 0;
+                    text-decoration: none;
+                    color: #000;
+                &:hover {
+                    color:#fff;
+                    background-color:#000;
+                }
+                &:disabled {
+                    border: 1px solid #ccc;
+                    color:#ccc;
+                        &:hover {
+                        color:#ccc;
+                        background-color:#fff;
+                    }
+                }
+                }
+                .form-control-feedback {
+                    margin: .3rem 0 .5rem;
+                    font-size: .8rem;
+                }
+            }
+        }
     }
 </style>
