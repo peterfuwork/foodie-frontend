@@ -36,7 +36,7 @@
                                     <div class="desc">{{ food.description }}</div>
                                 </div>
                             </div>
-                            <div class="rating"><span class="fa fa-star"></span> {{ (Number(food.totalRating) / food.comments.length).toFixed(2) }}</div>
+                            <div class="rating"><span class="fa fa-star"></span> {{ food.totalRating === undefined ? "No rating yet" : (Number(food.totalRating) / food.comments.length).toFixed(2) }}</div>
                         </div>
                         <div class="food" v-else="restaurant.food.length === 0">
                             No food post yet!
@@ -127,6 +127,7 @@ $primary-color: #FCCB6F;
             }
             .food-reviews {
                 .food-boxes{
+                        margin-bottom:3rem;
                         .food {
                             padding: 1rem;
                             position: relative;
@@ -136,7 +137,6 @@ $primary-color: #FCCB6F;
                             border-top: 1px solid #000;
                             border-left: 1px solid #000;
                             border-right: 1px solid #000;
-                            margin-bottom:3rem;
                             .delete-btn-wrapper {
                                 width:100%;
                                 .delete-btn {

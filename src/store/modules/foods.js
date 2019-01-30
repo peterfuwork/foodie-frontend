@@ -24,6 +24,7 @@ const actions = {
 
     onSearch({ rootState, commit }, event) {
         const filteredFood = rootState.foods.foods.filter((food) => {
+            console.log(food)
             return food.food_name.trim().toLowerCase().match(rootState.foods.search) || food.category[0].trim().toLowerCase().match(rootState.foods.search);
         });
         commit('setSearch', event.target.value);
