@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import App from './App.vue';
 import Category from './Category.vue';
 import Food from './Food.vue';
+import Restaurant from './Restaurant.vue';
 import Restaurants from './Restaurants.vue';
 import PostMenuForm from './components/PostMenuForm.vue';
 import store from './store';
@@ -47,6 +48,15 @@ const router = new VueRouter({
       path: '/postMenuForm',
       name: 'postMenuForm', 
       component: PostMenuForm,
+      props: (route) => (
+        console.log(route),
+        {...route.params}
+      )
+    },
+    { 
+      path: '/restaurant/:restaurantId',
+      name: 'restaurant', 
+      component: Restaurant,
       props: (route) => (
         console.log(route),
         {...route.params}

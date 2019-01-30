@@ -44,7 +44,7 @@ const actions = {
         event.preventDefault();
         const foodId = event.target.dataset.foodid;
         const commentId = event.target.dataset.commentid;
-
+        console.log(event)
         axios.delete(`http://localhost:4000/api/comments/${foodId}/${commentId}`)
         .then(response => {
             return response.data;

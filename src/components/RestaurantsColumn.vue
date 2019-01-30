@@ -48,6 +48,7 @@
                     draggable: true,
                     swipe: true,
                     autoplay: true,
+                    arrow: false,
                     autoplaySpeed: 4000,
                     responsive: [
                         {
@@ -62,7 +63,7 @@
             };
         },
         name: 'RestaurantsColumn',
-        computed: mapGetters(['allYelpRestaurants']),
+        computed: mapGetters(['allYelpRestaurants','restaurant']),
         methods: 
         mapActions(['fetchYelpRestaurants','onClickPostMenu']),
         next() {

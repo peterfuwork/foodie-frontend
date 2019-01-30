@@ -22,9 +22,11 @@
                                     ${{ food.price }}
                                 </div>
                                 <div class="text restaurant-info">
-                                    <div class="title">{{ food.restaurants[0].restaurant_name }}</div>
-                                    <div class="address">{{ food.restaurants[0].address }}</div>
-                                    <div class="address">{{ food.restaurants[0].phone }}</div>
+                                    <router-link :to="{name: 'restaurant', params: {restaurantId: food.restaurants[0]._id}}">
+                                        <div class="title">{{ food.restaurants[0].restaurant_name }}</div>
+                                        <div class="address">{{ food.restaurants[0].address }}</div>
+                                        <div class="address">{{ food.restaurants[0].phone }}</div>
+                                    </router-link>
                                 </div>
                                 <div class="comment-boxes">
                                     <div class="user" v-if="food.comments.length !== 0">
@@ -66,7 +68,7 @@ import { mapActions, mapGetters } from 'vuex';
 
     export default {
         name: 'FoodNearMe',
-        computed: mapGetters(['foods']),
+        computed: mapGetters(['foods','restaurant']),
         methods:  mapActions(['fetchFoods']),
         async created() {
             await this.fetchFoods();
@@ -97,6 +99,7 @@ import { mapActions, mapGetters } from 'vuex';
                     .comment-boxes{
                         border:1px solid #000;
                         padding: .5rem;
+                        margin: 1rem 0;
                         .user {
                             position: relative;
                             display: flex;
@@ -145,7 +148,7 @@ import { mapActions, mapGetters } from 'vuex';
                             &.name {
                                 width: 80%;
                                 margin: 0 0 1rem;
-                                font-size: 1rem;
+                                font-size: 1.4rem;
                                 font-style: normal;
                                 font-weight: bold;
                                 font-family: 'Noto Serif SC', serif;
@@ -161,11 +164,18 @@ import { mapActions, mapGetters } from 'vuex';
                             }
                             &.restaurant-info {
                                 padding:1rem 0;
-                                .title {
-                                    font-size:1.2rem;
-                                }
-                                .address {
-                                    font-size:.8rem;
+                                a {
+                                    color:#000;
+                                    text-decoration:none;
+                                    .title {
+                                        font-size:1.2rem;
+                                    }
+                                    .address {
+                                        font-size:.8rem;
+                                    }
+                                    &:hover {
+                                        text-decoration:underline;
+                                    }
                                 }
                             }
                         }
@@ -176,24 +186,31 @@ import { mapActions, mapGetters } from 'vuex';
                         }
                         .total-rating {
                             text-align:center;
+                            margin: 1rem 0;
                             .rate {
                                 font-style:italic;
                                 font-family: 'Noto Serif SC', serif;
                                 font-size: 1.4rem;
+                                @media(max-width:767px) {
+                                    position: relative;
+                                    font-size:2rem;
+                                }
                             }
                             .number-of-rating {
                                 font-size:.7rem;
+                                white-space: nowrap;
                             }
                         }
                         .links {
                             text-align:center;
-                            font-size:.7rem;
                             position: absolute;
                             bottom: 0;
                             left: 0;
                             right: 0;
+                            font-size: .8rem;
                             @media(max-width:767px) {
                                 position: relative;
+                                font-size:1.3rem;
                             }
                             .btn {
                                 padding: .2rem .5rem;

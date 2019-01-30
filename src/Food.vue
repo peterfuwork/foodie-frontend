@@ -14,8 +14,10 @@
                             ${{ food.price }}
                         </div>
                         <div v-if="food.restaurants !== undefined" class="text address">
-                            {{ food.restaurants[0].address }} <br />
-                            {{ food.restaurants[0].phone }}
+                             <router-link :to="{name: 'restaurant', params: {restaurantId: food.restaurants[0]._id}}">
+                                {{ food.restaurants[0].address }} <br />
+                                {{ food.restaurants[0].phone }}
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -36,7 +38,7 @@
                     <div class="comment-boxes">
                         <div class="user" v-for="comment in food.comments" v-if="food.comments.length !== 0">
                             <div class="delete-btn-wrapper">
-                                <a @click="onClickDelete($event)" :data-foodId="food._id" :data-commentId="comment._id" class="delete-btn" href="#">Delete</a>
+                                <a @click="onClickDelete($event)" class="delete-btn" href="#"><span :data-foodId="food._id" :data-commentId="comment._id" class="fa fa-times"></span></a>
                             </div>
                             <div class="image-name">
                                 <img class="image" :src="comment.user.user_image" />
@@ -171,6 +173,7 @@ $primary-color: #FCCB6F;
                         .text {
                             font-family: 'Montserrat', sans-serif;
                             font-style: italic;
+                            
                             &.price {
                                 font-size: 1.4rem;
                                 font-style: normal;
@@ -182,7 +185,15 @@ $primary-color: #FCCB6F;
                             }
                             &.address {
                                 font-size:1.2rem;
+                                a {
+                                    color:#000;
+                                    text-decoration:none;
+                                    &:hover {
+                                        text-decoration:underline;
+                                    }  
+                                }
                             }
+                            
                         }
                     
                 }
@@ -193,20 +204,23 @@ $primary-color: #FCCB6F;
                             padding: 1rem;
                             position: relative;
                             display: flex;
-                            flex-direction: column;
-                            align-items: center;
                             border-top: 1px solid #000;
                             border-left: 1px solid #000;
                             border-right: 1px solid #000;
                             .delete-btn-wrapper {
-                                width:100%;
+                                display:inline-block;
+                                padding:.5rem;
+                                height: 100%;
                                 .delete-btn {
-
+                                    color:#000;
+                                }
+                                &:hover {
+                                    border:1px solid #000;
                                 }
                             }
                             .image-name {
                                 display: block;
-                                width: 100%;
+                                text-align: center;
                                 .image {
                                     max-width:3rem;
                                     border-radius: 50%;
@@ -216,9 +230,6 @@ $primary-color: #FCCB6F;
                                     font-size: .7rem;
                                     font-style:italic;
                                     display: inline-block;
-                                    position: absolute;
-                                    top: 16%;
-                                    margin-left: .5rem;
                                 }
                             }
                             .rating {
@@ -227,7 +238,9 @@ $primary-color: #FCCB6F;
                                 top: 4%;
                             }
                             .comments{
+                                padding: .5rem;
                                 width: 100%;
+                                line-height: 1.7;
                                 .title {
                                     font-family: 'Noto Serif SC', serif;
                                     font-size: .9rem;

@@ -40,7 +40,7 @@
     components: {
       RestaurantsColumn
     },
-    computed: mapGetters(['allYelpRestaurants']),
+    computed: mapGetters(['allYelpRestaurants','restaurant']),
     methods: mapActions(['fetchYelpRestaurants', 'onClickPostMenu']),
     async created() {
         await this.fetchYelpRestaurants();
