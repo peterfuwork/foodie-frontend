@@ -1,18 +1,23 @@
 import axios from "axios";
 import { printResult } from '../../services/PrintRating';
+import main from '../../main';
 
 const state = {
     foods: [],
-    food: []
+    food: [],
+    restaurantYelpId: '',
+    restaurantYelpPhone: ''
 };
 
 const getters = {
     foods: state => state.foods,
-    food: state => state.food
+    food: state => state.food,
+    restaurantYelpId: state => state.restaurantYelpId,
+    restaurantYelpPhone: state => state.restaurantYelpPhone
 };
 
 const actions = {
-    async fetchFoods({ commit }) {
+    async fetchFoods({rootState, commit }) {
         const response = await axios.get('http://localhost:4000/api/foods');
         const data = response.data.map((food) => {
             let foodRating = 0; 
@@ -30,10 +35,10 @@ const actions = {
                 return food;
             }
         });
-        console.log(data);
+        console.log(rootState);
         commit('setFoods', data);
     },
-    async filterFoodById({ commit }, id) {
+    async filterFoodById({ rootState, commit }, id) {
         const response = await axios.get(`http://localhost:4000/api/foods/${id}`)
         
         const data = response.data.map((food) => {
@@ -52,8 +57,104 @@ const actions = {
                 return food;
             }
         });
+        console.log(rootState)
         commit('setFood', data[0]);
     },
+
+    onClickPostMenu({ commit }, event) {
+        commit('setRestaurantYelpId', event.target.dataset.yelpid)
+        commit('setRestaurantYelpPhone', event.target.dataset.yelpphone)
+    },
+    onSubmitMenuForm({rootState, commit}, formProps) {
+        const category = [];
+        category.push(formProps.model.category);
+
+        let is_Spicy = null;
+        if(formProps.model.is_Spicy === "no") {
+            is_Spicy = false;
+        } else if (formProps.model.is_Spicy === "yes"){
+            is_Spicy = true;
+        }
+
+        const restaurantsInDB = rootState.yelpRestaurants.restaurants;
+        const restaurantsInYelp = rootState.yelpRestaurants.yelpRestaurants;
+
+        const arrayOfYelpRestaurant = rootState.yelpRestaurants.yelpRestaurants;
+        const clickRestaurantId = rootState.foods.restaurantYelpId;
+        const clickRestaurantPhone = rootState.foods.restaurantYelpPhone;
+        const findClickRestaurantObj = arrayOfYelpRestaurant.filter(restaurant => restaurant.id === clickRestaurantId);
+            
+        // we compare phone number to determine do we alreay have this restaurant in our DB.;
+        const result = restaurantsInDB.filter(o1 => o1.phone === clickRestaurantPhone);
+        console.log('result', result);
+
+
+        // if we cannot find it create a restaurant
+        if(result.length === 0) {
+            // loop through the address
+            let full_address = '';
+            for(let i = 0; i<findClickRestaurantObj[0].location.display_address.length; i++) {
+                full_address = findClickRestaurantObj[0].location.display_address[i] + ' ';
+            };
+            
+            //create restaurant
+            axios.post('http://localhost:4000/api/restaurants', {
+                "restaurant_name": findClickRestaurantObj[0].name,
+                "address": full_address,
+                "phone": findClickRestaurantObj[0].display_phone,
+                "type": findClickRestaurantObj[0].categories[0].title
+            })
+            .then(response => {
+                return response.data      
+            })
+            .then(restaurant => {
+                const formObj = {
+                    "food_name": formProps.model.food_name,
+                    "price": formProps.model.price,
+                    "food_image": formProps.model.food_image,
+                    "category": category,
+                    "description": formProps.model.description,
+                    "is_Spicy": is_Spicy,
+                    "userId": '5c4f387b9949cd0284a17621',
+                    "restaurantId": restaurant._id
+                }
+                console.log('formObj', formObj)
+                
+                axios.post(`http://localhost:4000/api/foods/${formObj.userId}/${formObj.restaurantId}`, formObj)
+                .then(response => {
+                    return response.data;
+                })
+                .then(data => {
+                    console.log('data', data);
+                    main._router.push('/');
+                    window.location.reload(false);
+                });
+            })
+        } 
+        else if(result.length > 0) {
+        // if the restaurant alreay existed in our DB
+        // push food to current restaurant property.
+            const formObj = {
+                "food_name": formProps.model.food_name,
+                "price": formProps.model.price,
+                "food_image": formProps.model.food_image,
+                "category": category,
+                "description": formProps.model.description,
+                "is_Spicy": is_Spicy,
+                "userId": '5c4f387b9949cd0284a17621',
+                "restaurantId": result[0]._id
+            }
+            axios.post(`http://localhost:4000/api/foods/${formObj.userId}/${formObj.restaurantId}`, formObj)
+            .then(response => {
+                return response.data;
+            })
+            .then(data => {
+                console.log('data', data);
+                main._router.push('/');
+                window.location.reload(false);
+            });
+        }
+    }
 };
 
 const mutations = {
@@ -62,6 +163,12 @@ const mutations = {
     },
     setFood: (state, food) => {
         state.food = food;
+    },
+    setRestaurantYelpId: (state, restaurantYelpId) => {
+        state.restaurantYelpId = restaurantYelpId;
+    },
+    setRestaurantYelpPhone: (state, restaurantYelpPhone) => {
+        state.restaurantYelpPhone = restaurantYelpPhone;
     }
 };
 

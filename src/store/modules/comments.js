@@ -35,10 +35,9 @@ const actions = {
             return response.data;
         })
         .then(data => {
-            rootState.push
-            console.log(data);
-            console.log(rootState)
-            commit('setFood', null, { root: true })
+
+            // reload the page.
+            window.location.reload(false); 
         });
     },
     onClickDelete({commit}, event) {
@@ -51,7 +50,8 @@ const actions = {
             return response.data;
         })
         .then(data => {
-            console.log(data)
+            // reload the page.
+            window.location.reload(false); 
         });
         
     }

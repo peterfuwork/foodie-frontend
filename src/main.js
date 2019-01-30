@@ -4,6 +4,7 @@ import App from './App.vue';
 import Category from './Category.vue';
 import Food from './Food.vue';
 import Restaurants from './Restaurants.vue';
+import PostMenuForm from './components/PostMenuForm.vue';
 import store from './store';
 
 
@@ -13,6 +14,7 @@ Vue.config.productionTip = false;
 
 const router = new VueRouter({
   mode: 'history',
+  base: '/',
   routes: [
     { 
       path: '/',
@@ -40,12 +42,23 @@ const router = new VueRouter({
         console.log(route),
         {...route.params}
       )
+    },
+    { 
+      path: '/postMenuForm',
+      name: 'postMenuForm', 
+      component: PostMenuForm,
+      props: (route) => (
+        console.log(route),
+        {...route.params}
+      )
     }
   ]
 });
 
-new Vue({
+const vueProject = new Vue({
   router,
   store,
   render: h => h(App),
-}).$mount('#app')
+}).$mount('#app');
+
+export default vueProject;

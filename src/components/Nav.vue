@@ -1,10 +1,11 @@
 <template>
     <nav class="nav">
         <div class="lists">
-            <a class="logo-wrapper" href="#"><img class="logo" src="https://dl.dropboxusercontent.com/s/42hawgg84mqxuy3/donut.png" /></a>
+            <router-link class="logo-wrapper" to="/">
+                <img class="logo" src="https://dl.dropboxusercontent.com/s/42hawgg84mqxuy3/donut.png" />
+            </router-link>
             <router-link to="/">Top Rating Food</router-link>
             <router-link to="/restaurants">Restaurants</router-link>
-            <a href="#">Food Blog</a>
         </div>
     </nav>
 </template>
@@ -43,6 +44,7 @@
                 padding:.5rem;
                 cursor: pointer;
                 .logo {
+                    cursor: pointer;
                     max-width:2rem;
                 }
                 &:hover {
