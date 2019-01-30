@@ -5,7 +5,7 @@
         </div>
         <div v-else="foods.length > 0">
             <h2>Top rated food</h2>
-            <div class="row food"  v-for="food in foods">
+            <div class="row food"  v-for="food in filteredFoods">
                 <div class="col-sm-4 col-xs-12">
                     <div class="food-image-wrapper">
                         <img class="food-image" :src="food.food_image" />
@@ -68,7 +68,7 @@ import { mapActions, mapGetters } from 'vuex';
 
     export default {
         name: 'FoodNearMe',
-        computed: mapGetters(['foods','restaurant']),
+        computed: mapGetters(['foods','restaurant','filteredFoods']),
         methods:  mapActions(['fetchFoods']),
         async created() {
             await this.fetchFoods();

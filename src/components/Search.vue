@@ -1,18 +1,16 @@
 <template>
     <div class="search-wrapper">
         <form class="form">
-            <input @input="onSearch" class="search" type="text" />
+            <input @input="onSearch" class="search" type="text" placeholder="search" />
         </form>
     </div>
 </template>
 <script>
+    import { mapActions, mapGetters } from 'vuex';
     export default {
-        name: 'SearchBar',
-        methods: {
-            onSearch: function(event) {
-                this.$emit('termChange', event.target.value);
-            }
-        }
+        computed: mapGetters(['search']),
+        methods:  mapActions(['onSearch']),
+        name: 'SearchBar'
     }
 </script>
 

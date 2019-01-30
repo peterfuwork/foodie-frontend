@@ -1,6 +1,6 @@
 <template>
     <section class="campaign-wrapper">
-        <SearchBar @termChange="onTermChange"></SearchBar>
+        <SearchBar></SearchBar>
         <ul class="campaign-desktop">
             <li>
                 <span style="background-image: url('https://dl.dropboxusercontent.com/s/rf49i4kjj5t0wsa/foodie_campaign_1_desktop.jpg');">&nbsp;</span>
@@ -31,11 +31,6 @@ export default {
   name: 'Campaign',
   components: {
     SearchBar
-  },
-  methods: {
-      onTermChange: function(searchTerm) {
-          console.log(searchTerm);
-      }
   }
 }
 </script>

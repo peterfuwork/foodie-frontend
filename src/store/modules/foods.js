@@ -6,17 +6,30 @@ const state = {
     foods: [],
     food: [],
     restaurantYelpId: '',
-    restaurantYelpPhone: ''
+    restaurantYelpPhone: '',
+    search: '',
+    filteredFoods: []
 };
 
 const getters = {
     foods: state => state.foods,
     food: state => state.food,
     restaurantYelpId: state => state.restaurantYelpId,
-    restaurantYelpPhone: state => state.restaurantYelpPhone
+    restaurantYelpPhone: state => state.restaurantYelpPhone,
+    search: state => state.search,
+    filteredFoods: state => state.filteredFoods
 };
 
 const actions = {
+
+    onSearch({ rootState, commit }, event) {
+        const filteredFood = rootState.foods.foods.filter((food) => {
+            return food.food_name.trim().toLowerCase().match(rootState.foods.search) || food.category[0].trim().toLowerCase().match(rootState.foods.search);
+        });
+        commit('setSearch', event.target.value);
+        commit('setFilteredFoods', filteredFood);
+    },
+
     async fetchFoods({rootState, commit }) {
         const response = await axios.get('http://localhost:4000/api/foods');
         const data = response.data.map((food) => {
@@ -37,6 +50,7 @@ const actions = {
         });
         console.log(rootState);
         commit('setFoods', data);
+        commit('setFilteredFoods', data);
     },
     async filterFoodById({ rootState, commit }, id) {
         const response = await axios.get(`http://localhost:4000/api/foods/${id}`)
@@ -169,6 +183,12 @@ const mutations = {
     },
     setRestaurantYelpPhone: (state, restaurantYelpPhone) => {
         state.restaurantYelpPhone = restaurantYelpPhone;
+    },
+    setSearch: (state, search) => {
+        state.search = search;
+    },
+    setFilteredFoods: (state, filteredFoods) => {
+        state.filteredFoods = filteredFoods;
     }
 };
 
