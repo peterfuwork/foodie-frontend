@@ -6,26 +6,27 @@
                 <div class="text-center" v-if="allYelpRestaurants.length === 0">
                   <img src="./styles/vendors/ajax-loader.gif" />
                 </div>
-                <div class="col-sm-4 restaurant-info" v-else="allYelpRestaurants.length > 0" v-for="yelpRestaurant in allYelpRestaurants">
-                    <div class="restaurant-image-wrapper">
-                        <img class="restaurant-image" :src="yelpRestaurant.image_url" />
-                    </div>
-                    <div class="info">
-                        <div class="text rating">
-                            <div class="rating-number">{{ yelpRestaurant.rating }}</div>
-                            <div class="rating-html" v-html="yelpRestaurant.htmlRating"></div>
+                <div class="col-sm-4" v-else>
+                    <div class="restaurant-info" v-for="yelpRestaurant in allYelpRestaurants" :key="yelpRestaurant.id">
+                        <div class="restaurant-image-wrapper">
+                            <img class="restaurant-image" :src="yelpRestaurant.image_url" />
                         </div>
-                        <div class="name text"> 
-                            {{ yelpRestaurant.name }}
-                        </div>
-                        <div class="location text"> ({{ yelpRestaurant.location.city + ", " + yelpRestaurant.location.state }})</div>
-                        <div class="text"> {{ yelpRestaurant.display_phone }}</div>
-                        <div class="links" @click="onClickPostMenu($event)">
-                            <router-link to="/postMenuForm" class="btn" :data-yelpId="yelpRestaurant.id" :data-yelpPhone="yelpRestaurant.display_phone"><span class="fa fa-star"></span> Post food</router-link>
+                        <div class="info">
+                            <div class="text rating">
+                                <div class="rating-number">{{ yelpRestaurant.rating }}</div>
+                                <div class="rating-html" v-html="yelpRestaurant.htmlRating"></div>
+                            </div>
+                            <div class="name text"> 
+                                {{ yelpRestaurant.name }}
+                            </div>
+                            <div class="location text"> ({{ yelpRestaurant.location.city + ", " + yelpRestaurant.location.state }})</div>
+                            <div class="text"> {{ yelpRestaurant.display_phone }}</div>
+                            <div class="links" @click="onClickPostMenu($event)">
+                                <router-link to="/postMenuForm" class="btn" :data-yelpId="yelpRestaurant.id" :data-yelpPhone="yelpRestaurant.display_phone"><span class="fa fa-star"></span> Post food</router-link>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
             </div>
         </div>
     </section>

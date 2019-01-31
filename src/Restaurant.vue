@@ -2,7 +2,7 @@
     <section v-if="restaurant === undefined" class="restaurant-single container-fluid">
         Error
     </section>
-    <section v-else="restaurant !== undefined" class="restaurant-single container-fluid">
+    <section v-else class="restaurant-single container-fluid">
         <div class="row restaurant">
             <div class="col-sm-6 col-xs-12">
                 <div class="restaurant-info">
@@ -24,8 +24,8 @@
             </div>
             <div class="col-xs-12">
                 <div class="food-reviews">
-                    <div class="food-boxes">
-                        <div class="food" v-for="food in restaurant.foods" v-if="restaurant.foods.length !== 0">
+                    <div class="food-boxes" v-if="restaurant.foods.length !== 0">
+                        <div class="food" v-for="food in restaurant.foods" :key="food._id">
                             <div class="image-name">
                                 <router-link :to="{name: 'food', params: {foodId: food._id}}">
                                     <img class="image" :src="food.food_image" />
@@ -38,12 +38,11 @@
                             </div>
                             <div class="rating"><span class="fa fa-star"></span> {{ food.totalRating === undefined ? "No rating yet" : (Number(food.totalRating) / food.comments.length).toFixed(2) }}</div>
                         </div>
-                        <div class="food" v-else="restaurant.food.length === 0">
-                            No food post yet!
-                        </div>
+                    </div>
+                    <div v-else>
+                        No food post yet!
                     </div>
                 </div>
-            </div>
             </div>
         </div>
     </section>

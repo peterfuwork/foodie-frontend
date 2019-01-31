@@ -3,10 +3,10 @@
         <div class="text-center" v-if="allYelpRestaurants.length === 0">
             <img src="../styles/vendors/ajax-loader.gif" />
         </div>
-        <div v-else="allYelpRestaurants.length > 0">
+        <div v-else>
             <h2>Swipe to see more restaurants near you</h2>
             <slick ref="slick" :options="slickOptions" >
-                <div class="row restaurant"  v-for="yelpRestaurant in allYelpRestaurants">
+                <div class="row restaurant"  v-for="yelpRestaurant in allYelpRestaurants" :key="yelpRestaurant.id">
                     <div class="col-xs-12 no-padding">
                         <div class="restaurant-info">
                             <div class="restaurant-image-wrapper">

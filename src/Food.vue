@@ -2,7 +2,7 @@
     <section v-if="food === undefined" class="food-single container-fluid">
         Error
     </section>
-    <section v-else="food !== undefined" class="food-single container-fluid">
+    <section v-else class="food-single container-fluid">
         <div class="row food">
             <div class="col-sm-6 col-xs-12">
                 <div class="food-info">
@@ -27,7 +27,7 @@
                     <div class="totalRating" v-if="food.comments && food.comments.length > 0">
                         <span class="fa fa-star"></span>{{ (Number(food.totalRating) / food.comments.length).toFixed(2) }}
                     </div>
-                    <div class="rating" v-else="food.comments.length === 0">
+                    <div class="rating" v-else>
                         No rating yet!
                     </div>
                     <img class="food-image" :src="food.food_image" />
@@ -35,8 +35,8 @@
             </div>
             <div class="col-xs-12">
                 <div class="food-reviews">
-                    <div class="comment-boxes">
-                        <div class="user" v-for="comment in food.comments" v-if="food.comments.length !== 0">
+                    <div class="comment-boxes" v-if="food.comments.length !== 0">
+                        <div class="user" v-for="comment in food.comments" :key="comment._id">
                             <div class="delete-btn-wrapper">
                                 <a @click="onClickDelete($event)" class="delete-btn" href="#"><span :data-foodId="food._id" :data-commentId="comment._id" class="fa fa-times"></span></a>
                             </div>
@@ -50,9 +50,9 @@
                                 <div class="message">{{ comment.message }}</div>
                             </div>
                         </div>
-                        <div class="user" v-else="food.comments.length === 0">
-                            No review yet!
-                        </div>
+                    </div>
+                    <div v-else>
+                        No review yet!
                     </div>
                 </div>
             </div>
