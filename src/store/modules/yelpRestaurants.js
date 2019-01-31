@@ -25,13 +25,13 @@ const actions = {
     },
 
     async fetchRestaurants({ commit }) {
-        const response = await axios.get('http://localhost:4000/api/restaurants');
+        const response = await axios.get('https://foodie-g102.herokuapp.com/api/restaurants');
         const data = response.data;
         commit('setRestaurants', data);
     },
 
     async filterRestaurantById({ rootState, commit }, id) {
-        const response = await axios.get(`http://localhost:4000/api/restaurants/${id}`)
+        const response = await axios.get(`https://foodie-g102.herokuapp.com/api/restaurants/${id}`)
         
         const data = response.data.map(restaurant => {
             restaurant.foods.map((food) => {

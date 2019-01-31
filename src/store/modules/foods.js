@@ -32,7 +32,7 @@ const actions = {
     },
 
     async fetchFoods({rootState, commit }) {
-        const response = await axios.get('http://localhost:4000/api/foods');
+        const response = await axios.get('https://foodie-g102.herokuapp.com/api/foods');
         const data = response.data.map((food) => {
             let foodRating = 0; 
             if(food.comments.length === 0) {
@@ -54,7 +54,7 @@ const actions = {
         commit('setFilteredFoods', data);
     },
     async filterFoodById({ rootState, commit }, id) {
-        const response = await axios.get(`http://localhost:4000/api/foods/${id}`)
+        const response = await axios.get(`https://foodie-g102.herokuapp.com/api/foods/${id}`)
         
         const data = response.data.map((food) => {
             let foodRating = 0; 
@@ -113,7 +113,7 @@ const actions = {
             };
             
             //create restaurant
-            axios.post('http://localhost:4000/api/restaurants', {
+            axios.post('https://foodie-g102.herokuapp.com/api/restaurants', {
                 "restaurant_name": findClickRestaurantObj[0].name,
                 "address": full_address,
                 "phone": findClickRestaurantObj[0].display_phone,
@@ -135,7 +135,7 @@ const actions = {
                 }
                 console.log('formObj', formObj)
                 
-                axios.post(`http://localhost:4000/api/foods/${formObj.userId}/${formObj.restaurantId}`, formObj)
+                axios.post(`https://foodie-g102.herokuapp.com/api/foods/${formObj.userId}/${formObj.restaurantId}`, formObj)
                 .then(response => {
                     return response.data;
                 })
@@ -159,7 +159,7 @@ const actions = {
                 "userId": '5c4f387b9949cd0284a17621',
                 "restaurantId": result[0]._id
             }
-            axios.post(`http://localhost:4000/api/foods/${formObj.userId}/${formObj.restaurantId}`, formObj)
+            axios.post(`https://foodie-g102.herokuapp.com/api/foods/${formObj.userId}/${formObj.restaurantId}`, formObj)
             .then(response => {
                 return response.data;
             })

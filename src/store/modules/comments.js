@@ -23,7 +23,7 @@ const actions = {
         }
     },
     onSubmitMessageForm({ rootState, commit }, formProps) {
-        axios.post(`http://localhost:4000/api/comments/${formProps.userId}/${formProps.foodId}`, 
+        axios.post(`https://foodie-g102.herokuapp.com/api/comments/${formProps.userId}/${formProps.foodId}`, 
         {
             "title": formProps.title,
             "message": formProps.message,
@@ -45,7 +45,7 @@ const actions = {
         const foodId = event.target.dataset.foodid;
         const commentId = event.target.dataset.commentid;
         console.log(event)
-        axios.delete(`http://localhost:4000/api/comments/${foodId}/${commentId}`)
+        axios.delete(`https://foodie-g102.herokuapp.com/api/comments/${foodId}/${commentId}`)
         .then(response => {
             return response.data;
         })
