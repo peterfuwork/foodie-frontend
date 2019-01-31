@@ -3,9 +3,9 @@
         <div class="text-center" v-if="foods.length === 0">
             <img src="../styles/vendors/ajax-loader.gif" />
         </div>
-        <div v-else="foods.length > 0">
+        <div v-else>
             <h2>Top rated food</h2>
-            <div class="row food"  v-for="food in filteredFoods">
+            <div class="row food"  v-for="food in filteredFoods" :key="food._id">
                 <div class="col-sm-4 col-xs-12">
                     <div class="food-image-wrapper">
                         <img class="food-image" :src="food.food_image" />
@@ -40,7 +40,7 @@
                                             <div class="message">{{ food.comments[0].message }}</div>
                                         </div>
                                     </div>
-                                    <div class="user" v-else="food.comments.length === 0">
+                                    <div class="user" v-else>
                                         No review yet!
                                     </div>
                                 </div>
