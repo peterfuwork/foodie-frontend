@@ -24,7 +24,7 @@
             </div>
             <div class="col-xs-12">
                 <div class="food-reviews">
-                    <div class="food-boxes" v-if="restaurant.foods.length !== 0">
+                    <div class="food-boxes" v-if="restaurant.foods && restaurant.foods.length !== 0">
                         <div class="food" v-for="food in restaurant.foods" :key="food._id">
                             <div class="image-name">
                                 <router-link :to="{name: 'food', params: {foodId: food._id}}">

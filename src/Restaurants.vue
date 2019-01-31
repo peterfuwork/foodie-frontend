@@ -6,8 +6,8 @@
                 <div class="text-center" v-if="allYelpRestaurants.length === 0">
                   <img src="./styles/vendors/ajax-loader.gif" />
                 </div>
-                <div class="col-sm-4" v-else>
-                    <div class="restaurant-info" v-for="yelpRestaurant in allYelpRestaurants" :key="yelpRestaurant.id">
+                <div v-else>
+                    <div class="col-sm-4 restaurant-info" v-for="yelpRestaurant in allYelpRestaurants" :key="yelpRestaurant.id">
                         <div class="restaurant-image-wrapper">
                             <img class="restaurant-image" :src="yelpRestaurant.image_url" />
                         </div>
@@ -34,13 +34,9 @@
 
 <script>
   import { mapActions, mapGetters } from 'vuex';
-  import RestaurantsColumn from './components/RestaurantsColumn';
 
   export default {
     name: 'Restaurants',
-    components: {
-      RestaurantsColumn
-    },
     computed: mapGetters(['allYelpRestaurants','restaurant']),
     methods: mapActions(['fetchYelpRestaurants', 'onClickPostMenu']),
     async created() {
