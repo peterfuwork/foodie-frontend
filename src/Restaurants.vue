@@ -21,7 +21,7 @@
                         <div class="location text"> ({{ yelpRestaurant.location.city + ", " + yelpRestaurant.location.state }})</div>
                         <div class="text"> {{ yelpRestaurant.display_phone }}</div>
                         <div class="links" @click="onClickPostMenu($event)">
-                            <router-link to="/postMenuForm" class="btn" :data-yelpId="yelpRestaurant.id" :data-yelpPhone="yelpRestaurant.display_phone"><span class="fa fa-star"></span> Post menu</router-link>
+                            <router-link to="/postMenuForm" class="btn" :data-yelpId="yelpRestaurant.id" :data-yelpPhone="yelpRestaurant.display_phone"><span class="fa fa-star"></span> Post food</router-link>
                         </div>
                     </div>
                 </div>
