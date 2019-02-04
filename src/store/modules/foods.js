@@ -143,7 +143,10 @@ const actions = {
                     console.log('data', data);
                     main._router.push('/');
                     window.location.reload(false);
-                });
+                })
+                .catch((error) => {
+                    console.log(error.response) //Logs a string: Error: Request failed with status code 404
+                })
             })
         } 
         else if(result.length > 0) {
@@ -167,7 +170,10 @@ const actions = {
                 console.log('data', data);
                 main._router.push('/');
                 window.location.reload(false);
-            });
+            })
+            .catch((error) => {
+                console.log(error.response) //Logs a string: Error: Request failed with status code 404
+            })
         }
     }
 };
