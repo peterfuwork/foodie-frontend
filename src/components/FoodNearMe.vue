@@ -65,7 +65,6 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-
     export default {
         name: 'FoodNearMe',
         computed: mapGetters(['foods','restaurant','filteredFoods']),

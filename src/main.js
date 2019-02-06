@@ -22,7 +22,6 @@ const router = new VueRouter({
       name: 'category',
       component: Category, 
       props: (route) => (
-        console.log(route),
         {...route.params}
       )
     },
@@ -31,7 +30,6 @@ const router = new VueRouter({
       name: 'restaurants',
       component: Restaurants, 
       props: (route) => (
-        console.log(route),
         {...route.params}
       )
     },
@@ -40,7 +38,6 @@ const router = new VueRouter({
       name: 'food', 
       component: Food,
       props: (route) => (
-        console.log(route),
         {...route.params}
       )
     },
@@ -49,7 +46,6 @@ const router = new VueRouter({
       name: 'postMenuForm', 
       component: PostMenuForm,
       props: (route) => (
-        console.log(route),
         {...route.params}
       )
     },
@@ -58,7 +54,6 @@ const router = new VueRouter({
       name: 'restaurant', 
       component: Restaurant,
       props: (route) => (
-        console.log(route),
         {...route.params}
       )
     }

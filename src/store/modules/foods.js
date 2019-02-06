@@ -24,7 +24,6 @@ const actions = {
 
     onSearch({ rootState, commit }, event) {
         const filteredFood = rootState.foods.foods.filter((food) => {
-            console.log(food)
             return food.food_name.trim().toLowerCase().match(rootState.foods.search) || food.category[0].trim().toLowerCase().match(rootState.foods.search);
         });
         commit('setSearch', event.target.value);
@@ -49,7 +48,6 @@ const actions = {
                 return food;
             }
         });
-        console.log(rootState);
         commit('setFoods', data);
         commit('setFilteredFoods', data);
     },
@@ -72,7 +70,6 @@ const actions = {
                 return food;
             }
         });
-        console.log(rootState)
         commit('setFood', data[0]);
     },
 
@@ -101,8 +98,8 @@ const actions = {
             
         // we compare phone number to determine do we alreay have this restaurant in our DB.;
         const result = restaurantsInDB.filter(o1 => o1.phone === clickRestaurantPhone);
-        console.log('result', result);
 
+        console.log('result', result);
 
         // if we cannot find it create a restaurant
         if(result.length === 0) {
@@ -110,7 +107,7 @@ const actions = {
             let full_address = '';
             for(let i = 0; i<findClickRestaurantObj[0].location.display_address.length; i++) {
                 full_address = findClickRestaurantObj[0].location.display_address[i] + ' ';
-            };
+            }
             
             //create restaurant
             axios.post('https://foodie-g102.herokuapp.com/api/restaurants', {
@@ -120,6 +117,7 @@ const actions = {
                 "type": findClickRestaurantObj[0].categories[0].title
             })
             .then(response => {
+                console.log('restaurant response',response)
                 return response.data      
             })
             .then(restaurant => {
@@ -130,22 +128,21 @@ const actions = {
                     "category": category,
                     "description": formProps.model.description,
                     "is_Spicy": is_Spicy,
-                    "userId": '5c4f387b9949cd0284a17621',
+                    "userId": '5c5b51c4e7a6c200172ef177',
                     "restaurantId": restaurant._id
                 }
+
                 console.log('formObj', formObj)
                 
                 axios.post(`https://foodie-g102.herokuapp.com/api/foods/${formObj.userId}/${formObj.restaurantId}`, formObj)
                 .then(response => {
+                    console.log('restaurant response',response)
                     return response.data;
                 })
                 .then(data => {
-                    console.log('data', data);
+                    console.log('restaurant data',data);
                     main._router.push('/');
                     window.location.reload(false);
-                })
-                .catch((error) => {
-                    console.log(error.response) //Logs a string: Error: Request failed with status code 404
                 })
             })
         } 
@@ -159,20 +156,21 @@ const actions = {
                 "category": category,
                 "description": formProps.model.description,
                 "is_Spicy": is_Spicy,
-                "userId": '5c4f387b9949cd0284a17621',
+                "userId": '5c5b51c4e7a6c200172ef177',
                 "restaurantId": result[0]._id
             }
+
+            console.log('formObj2', formObj);
+
             axios.post(`https://foodie-g102.herokuapp.com/api/foods/${formObj.userId}/${formObj.restaurantId}`, formObj)
             .then(response => {
+                console.log('response food', response)
                 return response.data;
             })
             .then(data => {
-                console.log('data', data);
+                console.log('data food', data)
                 main._router.push('/');
                 window.location.reload(false);
-            })
-            .catch((error) => {
-                console.log(error.response) //Logs a string: Error: Request failed with status code 404
             })
         }
     }

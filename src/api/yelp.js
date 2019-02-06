@@ -18,12 +18,10 @@ export default {
         const response = await this.main();
         const lat = await response.coords.latitude;
         const lon = await response.coords.longitude;
-        console.log(lat, lon);
         const data = await axios.post('https://foodie-g102.herokuapp.com/api/yelp_restaurants', {
             lat,
             lon
         })
-        console.log(data);
         return data;
     }
 

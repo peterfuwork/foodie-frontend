@@ -44,7 +44,6 @@ const actions = {
         event.preventDefault();
         const foodId = event.target.dataset.foodid;
         const commentId = event.target.dataset.commentid;
-        console.log(event)
         axios.delete(`https://foodie-g102.herokuapp.com/api/comments/${foodId}/${commentId}`)
         .then(response => {
             return response.data;
@@ -53,9 +52,7 @@ const actions = {
             // reload the page.
             window.location.reload(false); 
         });
-        
     }
-    
 };
 
 const mutations = {

@@ -42,7 +42,7 @@
             </validate>
 
             <validate auto-label class="form-group required-field" :class="fieldClassName(formstate.is_Spicy)">
-                <div><label>Does this food spicy?</label></div>
+                <div><label>Is this food spicy?</label></div>
                 <select class="select form-control" name="is_Spicy" required v-model.lazy="model.is_Spicy">
                     <option :value="null">Choose...</option>
                     <option value="yes">Yes</option>
